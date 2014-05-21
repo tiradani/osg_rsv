@@ -198,38 +198,38 @@
 #
 class osg_rsv (
   # Main RSV configuration
-  $rsv_enabled = 'True',
-  $enable_gratia = 'True',
-  $gratia_collector = undef,
-  $service_cert  = 'DEFAULT',
-  $service_key  = 'DEFAULT',
-  $service_proxy = 'DEFAULT',
-  $legacy_proxy = 'False',
-  $user_proxy = 'DEFAULT',
-  $ce_hosts = 'UNAVAILABLE',
-  $gridftp_hosts = 'UNAVAILABLE',
-  $gridftp_dir = 'DEFAULT',
-  $gratia_probes = 'DEFAULT',
-  $gums_hosts = 'UNAVAILABLE',
-  $srm_hosts = 'UNAVAILABLE',
-  $srm_dir = 'DEFAULT',
-  $srm_webservice_path = 'DEFAULT',
-  $enable_local_probes = 'True',
-  $condor_location = 'UNAVAILABLE',
+  $rsv_enabled            = 'True',
+  $enable_gratia          = 'True',
+  $gratia_collector       = undef,
+  $service_cert           = 'DEFAULT',
+  $service_key            = 'DEFAULT',
+  $service_proxy          = 'DEFAULT',
+  $legacy_proxy           = 'False',
+  $user_proxy             = 'DEFAULT',
+  $ce_hosts               = 'UNAVAILABLE',
+  $gridftp_hosts          = 'UNAVAILABLE',
+  $gridftp_dir            = 'DEFAULT',
+  $gratia_probes          = 'DEFAULT',
+  $gums_hosts             = 'UNAVAILABLE',
+  $srm_hosts              = 'UNAVAILABLE',
+  $srm_dir                = 'DEFAULT',
+  $srm_webservice_path    = 'DEFAULT',
+  $enable_local_probes    = 'True',
+  $condor_location        = 'UNAVAILABLE',
 
   # Nagios plugin configuration
   # This plugin is fully integrated with RSV
-  $enable_nagios = 'False',
-  $nagios_send_nsca = 'False',
+  $enable_nagios          = 'False',
+  $nagios_send_nsca       = 'False',
 
   # Zabbix plugin configuration
   # This plugin is not integrated with RSV, so it must explicitly be enabled
   # and configured separately
-  $enable_zabbix_plugin = false,
-  $zabbix_short_hostname = undef,
-  $zabbix_long_hostname = undef,
-  $zabbix_trapper_port = undef,
-  $zabbix_extra_args = '',
+  $enable_zabbix_plugin   = false,
+  $zabbix_short_hostname  = undef,
+  $zabbix_long_hostname   = undef,
+  $zabbix_trapper_port    = undef,
+  $zabbix_extra_args      = '',
 ) {
   package { 'rsv':
     ensure => present,
@@ -275,7 +275,7 @@ class osg_rsv (
     subscribe   => File['/etc/osg/config.d/30-rsv.ini'],
     refreshonly => true,
     notify      => Service['rsv'],
-    onlyif => ["test -f ${service_proxy}", "test -f ${service_key}"],
+    onlyif      => ["test -f ${service_proxy}", "test -f ${service_key}"],
   }
 
   service { 'condor-cron':
@@ -284,7 +284,9 @@ class osg_rsv (
   }
 
   service { 'rsv':
-    ensure => running,
-    enable => true,
+    ensure    => running,
+    enable    => true,
+    hasstatus => false,
+    status    => 'test -f /var/lock/subsys/rsv',
   }
 }
