@@ -239,7 +239,7 @@ class osg_rsv (
     content => template('osg_rsv/30-rsv.ini.erb'),
   }
 
-  if $enable_zabbix_plugin {
+  if str2bool($enable_zabbix_plugin) {
     package { 'rsv-consumers-zabbix':
       ensure  => present,
       require => Package['rsv'],

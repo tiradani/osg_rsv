@@ -16,6 +16,9 @@ The idea is that larger sites may have more than one CE to monitor.  RSV is
 
 # Notes
 
+## Dependencies
+This module depends on the puppet stdlib module.
+
 ## Certificates
 There is one circular dependency in the install procedure.  If you use service
 certificates to submit jobs, then the certificates must exist and be owned by
