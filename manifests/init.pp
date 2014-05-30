@@ -275,7 +275,7 @@ class osg_rsv (
     subscribe   => File['/etc/osg/config.d/30-rsv.ini'],
     refreshonly => true,
     notify      => Service['rsv'],
-    onlyif      => ["test -f ${service_proxy}", "test -f ${service_key}"],
+    onlyif      => ["/usr/bin/test -f ${service_cert}", "/usr/bin/test -f ${service_key}"],
   }
 
   service { 'condor-cron':
