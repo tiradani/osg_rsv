@@ -287,6 +287,6 @@ class osg_rsv (
     ensure    => running,
     enable    => true,
     hasstatus => false,
-    status    => 'test -f /var/lock/subsys/rsv',
+    status    => '/usr/bin/test -f /var/lock/subsys/rsv',
   }
 }
